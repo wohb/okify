@@ -22,6 +22,7 @@ import (
 	"github.com/briandowns/spinner"
 	"time"
 	"math/rand"
+	"github.com/jedib0t/go-pretty/table"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
@@ -37,15 +38,20 @@ var rootCmd = &cobra.Command{
 Example:
 	ls nonexistent-file || okify
 	`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
 		Run: func(cmd *cobra.Command, args []string) {
+			// Spinner is pretty
 			s := spinner.New(spinner.CharSets[24], 100*time.Millisecond)
 			s.Suffix = " Calculating non-offensive response"
-			s.FinalMSG = randomCompliment()
 			s.Start()
-			time.Sleep(4 * time.Second)
+			time.Sleep(3 * time.Second)
 			s.Stop()
+
+			// Table is also pretty
+			t := table.NewWriter()
+			t.SetOutputMirror(os.Stdout)
+			t.AppendHeader(table.Row{randomCompliment()})
+			t.Render()
+
 			os.Exit(0)
 		},
 }
@@ -58,7 +64,7 @@ func randomCompliment() string {
 		"Looks good to me!\n",
 		"You are doing such a good job!\n",
 		"No one is as good as you are!\n",
-		"How is that you are still single!\n",
+		"How are you still single!\n",
 		"You are so handsome!\n",
 	}
 	complimentIndex := rand.Intn(len(compliments))
@@ -74,11 +80,6 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.okify.yaml)")
 }
 

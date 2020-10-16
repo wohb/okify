@@ -22,7 +22,7 @@ choco install okify
 ## Usage
 Ignore test results:
 ```shell script
-pytest || okify
+pytest | okify
 
 # Output:       "You are doing such a good job!" 
 # Exit Code:    0
@@ -30,7 +30,7 @@ pytest || okify
 
 Overlook scripts failures:
 ```shell script
-./cobol-rules.sh || okify
+./cobol-rules.sh | okify
 
 # Output:       "Looks good to me!" 
 # Exit Code:    0
@@ -38,13 +38,13 @@ Overlook scripts failures:
 
 Use the '--status' flag to indicate how good the situation is (Accepts any value):
 ```shell script
-python main.py || okify --status "good"
+python main.py | okify --status "good"
 
 # Output:       "Ignore the haters!" 
 # Exit Code:    0
 ```
 ```shell script
-go run main.go || okify --status "bad"
+go run main.go | okify --status "bad"
 
 # Output:       "Everything is fine!" 
 # Exit Code:    0
@@ -52,7 +52,7 @@ go run main.go || okify --status "bad"
 
 Use the '--im-offended' flag to get an apology:
 ```shell script
-return 1 || okify --im-offended
+return 1 | okify --im-offended
 
 # Output:       "I'm so sorry, you are the best!" 
 # Exit Code:    0
