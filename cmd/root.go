@@ -29,6 +29,8 @@ import (
 )
 
 var cfgFile string
+var status string
+var imOffended bool
 
 var rootCmd = &cobra.Command{
 	Use:   "okify",
@@ -47,10 +49,17 @@ Example:
 			s.Stop()
 
 			// Table is also pretty
-			t := table.NewWriter()
-			t.SetOutputMirror(os.Stdout)
-			t.AppendHeader(table.Row{randomCompliment()})
-			t.Render()
+			if imOffended {
+				t := table.NewWriter()
+				t.SetOutputMirror(os.Stdout)
+				t.AppendHeader(table.Row{randomApology()})
+				t.Render()
+			} else {
+				t := table.NewWriter()
+				t.SetOutputMirror(os.Stdout)
+				t.AppendHeader(table.Row{randomCompliment()})
+				t.Render()
+			}
 
 			os.Exit(0)
 		},
@@ -71,6 +80,17 @@ func randomCompliment() string {
 	return compliments[complimentIndex]
 }
 
+func randomApology() string {
+	rand.Seed(time.Now().Unix())
+	apologies := []string{
+		"I'm so sorry!\n",
+		"It's all my fault!\n",
+		"How could I have been so stupid?!\n",
+	}
+	apologyIndex := rand.Intn(len(apologies))
+	return apologies[apologyIndex]
+}
+
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println("You are doing great")
@@ -80,7 +100,8 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.okify.yaml)")
+	rootCmd.PersistentFlags().StringVar(&status, "status", "", "how good the situation is")
+	rootCmd.PersistentFlags().BoolVar(&imOffended, "im-offended", false, "you are owed an apology")
 }
 
 // initConfig reads in config file and ENV variables if set.

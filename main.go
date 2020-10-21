@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "okify/cmd"
+import "github.com/wohb/okify/cmd"
 
 func main() {
 	cmd.Execute()
