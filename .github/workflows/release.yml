@@ -1,10 +1,10 @@
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    types: [closed]
 name: Build Release
 jobs:
   release-linux-386:
+    if: github.event.pull_request.merged == true
     name: release linux/386
     runs-on: ubuntu-latest
     steps:
@@ -17,6 +17,7 @@ jobs:
           GOOS: linux
           EXTRA_FILES: "LICENSE"
   release-linux-amd64:
+    if: github.event.pull_request.merged == true
     name: release linux/amd64
     runs-on: ubuntu-latest
     steps:
@@ -29,6 +30,7 @@ jobs:
           GOOS: linux
           EXTRA_FILES: "LICENSE"
   release-linux-arm:
+    if: github.event.pull_request.merged == true
     name: release linux/386
     runs-on: ubuntu-latest
     steps:
@@ -41,6 +43,7 @@ jobs:
           GOOS: linux
           EXTRA_FILES: "LICENSE"
   release-linux-arm64:
+    if: github.event.pull_request.merged == true
     name: release linux/amd64
     runs-on: ubuntu-latest
     steps:
@@ -53,6 +56,7 @@ jobs:
           GOOS: linux
           EXTRA_FILES: "LICENSE"
   release-darwin-amd64:
+    if: github.event.pull_request.merged == true
     name: release darwin/amd64
     runs-on: ubuntu-latest
     steps:
@@ -65,6 +69,7 @@ jobs:
           GOOS: darwin
           EXTRA_FILES: "LICENSE"
   release-windows-386:
+    if: github.event.pull_request.merged == true
     name: release windows/386
     runs-on: ubuntu-latest
     steps:
@@ -77,6 +82,7 @@ jobs:
           GOOS: windows
           EXTRA_FILES: "LICENSE"
   release-windows-amd64:
+    if: github.event.pull_request.merged == true
     name: release windows/amd64
     runs-on: ubuntu-latest
     steps:
