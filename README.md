@@ -8,6 +8,7 @@ Simply pipe anything into the okify CLI, and get the result status you want!
 ## Installation
 Mac
 ```
+brew install wget
 wget https://github.com/wohb/okify/releases/download/v0.2.0/okify -P /usr/local/bin && chmod +x /usr/local/bin/okify
 ```
 Ubuntu
