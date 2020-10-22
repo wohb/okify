@@ -38,7 +38,7 @@ var rootCmd = &cobra.Command{
 	Long: `Avoid getting non-positive feedback from anything.
 
 Example:
-	ls nonexistent-file || okify
+	ls nonexistent-file | okify
 	`,
 		Run: func(cmd *cobra.Command, args []string) {
 			// Spinner is pretty
