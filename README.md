@@ -9,11 +9,11 @@ Simply pipe anything into the okify CLI, and get the result status you want!
 Mac
 ```
 brew install wget
-wget https://github.com/wohb/okify/releases/download/v0.2.1/okify -P /usr/local/bin && chmod +x /usr/local/bin/okify
+wget https://github.com/wohb/okify/releases/latest/download/okify -P /usr/local/bin && chmod +x /usr/local/bin/okify
 ```
 Ubuntu
 ```
-wget https://github.com/wohb/okify/releases/download/v0.2.1/okify -P $HOME/bin && chmod +x $HOME/bin/okify
+wget https://github.com/wohb/okify/releases/latest/download/okify -P $HOME/bin && chmod +x $HOME/bin/okify
 ```
 Windows
 ```
