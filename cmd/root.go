@@ -17,20 +17,26 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
-	"os"
-	"github.com/briandowns/spinner"
-	"time"
 	"math/rand"
+	"os"
+	"time"
+
+	cowsay "github.com/Code-Hex/Neo-cowsay"
+	"github.com/briandowns/spinner"
 	"github.com/jedib0t/go-pretty/table"
+	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
+
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
-var status string
-var imOffended bool
+var (
+	cfgFile    string
+	status     string
+	useCowsay  bool
+	imOffended bool
+)
 
 var rootCmd = &cobra.Command{
 	Use:   "okify",
@@ -40,29 +46,44 @@ var rootCmd = &cobra.Command{
 Example:
 	ls nonexistent-file | okify
 	`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// Spinner is pretty
-			s := spinner.New(spinner.CharSets[24], 100*time.Millisecond)
-			s.Suffix = " Calculating non-offensive response"
-			s.Start()
-			time.Sleep(3 * time.Second)
-			s.Stop()
+	Run: func(cmd *cobra.Command, args []string) {
+		// Spinner is pretty
+		displaySpinner(3)
 
-			// Table is also pretty
-			if imOffended {
-				t := table.NewWriter()
-				t.SetOutputMirror(os.Stdout)
-				t.AppendHeader(table.Row{randomApology()})
-				t.Render()
-			} else {
-				t := table.NewWriter()
-				t.SetOutputMirror(os.Stdout)
-				t.AppendHeader(table.Row{randomCompliment()})
-				t.Render()
-			}
+		// Table is also pretty
+		statement := randomCompliment()
+		if imOffended {
+			statement = randomApology()
+		}
 
+		if useCowsay {
+			output, _ := cowsay.Say(
+				cowsay.Phrase(statement),
+				cowsay.Type("default"),
+				cowsay.BallonWidth(40),
+			)
+			fmt.Println(output)
 			os.Exit(0)
-		},
+		}
+
+		printTable(statement)
+		os.Exit(0)
+	},
+}
+
+func printTable(s string) {
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{s})
+	t.Render()
+}
+
+func displaySpinner(seconds time.Duration) {
+	s := spinner.New(spinner.CharSets[24], 100*time.Millisecond)
+	s.Suffix = " Calculating non-offensive response"
+	s.Start()
+	time.Sleep(seconds * time.Second)
+	s.Stop()
 }
 
 func randomCompliment() string {
@@ -102,6 +123,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&status, "status", "", "how good the situation is")
 	rootCmd.PersistentFlags().BoolVar(&imOffended, "im-offended", false, "you are owed an apology")
+	rootCmd.PersistentFlags().BoolVar(&useCowsay, "cowsay", false, "use cowsay for printing messages")
 }
 
 // initConfig reads in config file and ENV variables if set.
