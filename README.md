@@ -58,6 +58,23 @@ return 1 | okify --im-offended
 # Output:       "I'm so sorry, you are the best!" 
 # Exit Code:    0
 ```
+Use the '--cowsay' flag to output using a cow:
+```shell script
+ls nonexistingpath | okify --cowsay
+
+# Output: " 
+_______________________________
+/ No one is as good as you are! \
+\                               /
+ -------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+" 
+# Exit Code:    0
+```
 
 ## Contributing
 1. Open an issue that start with "It's not really an issue"
