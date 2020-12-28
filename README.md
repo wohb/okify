@@ -79,4 +79,4 @@ _______________________________
 ## Contributing
 1. Open an issue that start with "It's not really an issue"
 2. Avoid suggesting improvements as it's offensive
-3. Reply to the issue with "Thanks you!" and close it
+3. Reply to the issue with "Thank you!" and close it
